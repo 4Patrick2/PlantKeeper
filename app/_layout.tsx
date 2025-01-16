@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Button } from 'react-native'
 import React, { useEffect } from 'react'
-import { Stack, SplashScreen } from "expo-router"
+import { Stack, SplashScreen, Link } from "expo-router"
 import { useFonts } from "expo-font"
 
 
@@ -9,7 +9,7 @@ SplashScreen.preventAutoHideAsync();
 function LogoTitle() {
   return( <Image 
       style = {{width: 50, height: 50}}
-      source={require('../assets/images/can2.png')}
+      source={require('../assets/images/watering-plants.png')}
     />
   )
 }
@@ -37,7 +37,8 @@ const RootLayout = () => {
   return (
     <Stack>
       {/* <Stack.Screen name="index" options={{ headerShown: true, title: "Watering" }}/> */}
-      <Stack.Screen name="index" options={{ headerTitleAlign: 'center', headerTitle: (props) => <LogoTitle {...props} />, }}/>
+      <Stack.Screen name="index" options={{ headerTitleAlign: 'center', headerTitle: (props) => <LogoTitle {...props} />, 
+                                            headerRight: () => (<Link href="/(tabs)/home">Settings</Link>)}}/>
     </Stack>
   )
 }
