@@ -3,16 +3,41 @@ import React, { useEffect } from 'react'
 import { Stack, SplashScreen, Link } from "expo-router"
 import { useFonts } from "expo-font"
 
+import icons from "../constants/icons"
 
 SplashScreen.preventAutoHideAsync();
 
 function LogoTitle() {
   return( <Image 
       style = {{width: 50, height: 50}}
-      source={require('../assets/images/watering-plants.png')}
+      source={icons.watering}
+      tintColor="#5BE42A"
     />
   )
 }
+
+function SettingsImage() {
+  return(
+    // <Image
+    //   className='w-9 h-9'
+    //   tintColor="#5BE42A"
+    //   source={icons.setting}
+    // />
+
+    <View className='items-center justify-center gap-1 -mt-4'>
+      <Image 
+        source={icons.setting}
+        resizeMode='contain'
+        tintColor="#cdcde0"
+        className='w-6 h-6'
+      />
+      <Text className={"text-xs -ml-3 -mr-3"} style={{color: "#cdcde0"}}>
+        Settings
+      </Text>
+    </View>
+  )
+}
+
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts ({
@@ -36,9 +61,11 @@ const RootLayout = () => {
 
   return (
     <Stack>
-      {/* <Stack.Screen name="index" options={{ headerShown: true, title: "Watering" }}/> */}
-      <Stack.Screen name="index" options={{ headerTitleAlign: 'center', headerTitle: (props) => <LogoTitle {...props} />, 
-                                            headerRight: () => (<Link href="/(tabs)/home">Settings</Link>)}}/>
+      <Stack.Screen name="(tabs)" options={{ 
+        headerStyle: { backgroundColor: "#161622"},
+        headerTitleAlign: 'center', 
+        headerTitle: (props) => <LogoTitle {...props} />, 
+        headerRight: (props) => (<Link href="settings"> <SettingsImage {...props}/></Link>)}}/> 
     </Stack>
   )
 }
