@@ -1,7 +1,8 @@
-import { View, Text, ScrollView } from 'react-native'
+import { TouchableOpacity, View, Text, ScrollView } from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import CustomButton from '@/components/CustomButton'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomButton from "../../components/CustomButton"
+import "../../global.css"
 
 const CreatePlant = () => {
   return (
@@ -14,8 +15,8 @@ const CreatePlant = () => {
             </Text>
           </View>
           <CustomButton 
-            handlePress={() => {}}
             title="Create Plant"
+            handlePress={() => {}}
             containerStyles="w-full mt-7"
           />
          </View>
@@ -25,3 +26,11 @@ const CreatePlant = () => {
 }
 
 export default CreatePlant
+
+function Button() {
+  return (
+    <TouchableOpacity className="bg-green justify-center rounded-xl min-h-[62px] items-center">
+      <Text className="text-xl text-white font-extrabold">Create stuff</Text>
+    </TouchableOpacity>
+  )
+}
