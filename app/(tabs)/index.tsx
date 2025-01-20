@@ -12,7 +12,7 @@ const Home = () => {
 export default Home> */}
 
 
-
+import { StatusBar } from 'expo-status-bar';
 import { Text, View, FlatList } from "react-native"
 import "../../global.css"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -27,10 +27,10 @@ const Index = () => {
                 renderItem={( {item} ) => (
                   <View>
                     <Text className="text-3xl">{item.id}</Text>
-                    <CustomButton></CustomButton>
                   </View>
                 )}
             />
+            <StatusBar backgroundColor="#161622" style="light"/>
         </SafeAreaView>
     )
 }

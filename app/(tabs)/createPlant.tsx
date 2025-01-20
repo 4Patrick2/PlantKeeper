@@ -1,10 +1,23 @@
-import { TouchableOpacity, View, Text, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView } from 'react-native'
+import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomButton from "../../components/CustomButton"
+import FormField from '@/components/FormField';
 import "../../global.css"
 
 const CreatePlant = () => {
+  const [form, setForm] = useState({
+    plant: "",
+    preriod: ""
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const submit = () => {
+
+  }
+
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle= {{height: "100%"}}>
@@ -14,23 +27,51 @@ const CreatePlant = () => {
               Create a <Text className='text-green'>Plant</Text>
             </Text>
           </View>
+          <FormField 
+              title="Name of the plant"
+              value={form.plant}
+
+              handleChangeText={(p:string) => setForm({...form, plant: p})}
+              otherStyles="mt-7"
+            />
+
+            <FormField 
+              title="Watering Period"
+              value={form.preriod}
+              keyboardType="numeric"
+              handleChangeText={(p:string) => setForm({...form, preriod: p})}
+              otherStyles="mt-7"
+            /> 
+
+            <FormField 
+              title="Furtilizing Period"
+              value={form.preriod}
+              keyboardType="numeric"
+              handleChangeText={(p:string) => setForm({...form, preriod: p})}
+              otherStyles="mt-7"
+            /> 
+
+            <FormField 
+              title="Re-potting Period"
+              value={form.preriod}
+              keyboardType="numeric"
+              handleChangeText={(p:string) => setForm({...form, preriod: p})}
+              otherStyles="mt-7"
+            /> 
+
           <CustomButton 
             title="Create Plant"
-            handlePress={() => {}}
+            handlePress={() => {submit}}
             containerStyles="w-full mt-7"
+            isLoading= {isSubmitting}
           />
          </View>
+         
       </ScrollView>
+
+      <StatusBar backgroundColor="#161622" style="light"/>
     </SafeAreaView>
   )
 }
 
 export default CreatePlant
-
-function Button() {
-  return (
-    <TouchableOpacity className="bg-green justify-center rounded-xl min-h-[62px] items-center">
-      <Text className="text-xl text-white font-extrabold">Create stuff</Text>
-    </TouchableOpacity>
-  )
-}
