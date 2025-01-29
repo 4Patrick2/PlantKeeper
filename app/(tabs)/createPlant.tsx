@@ -4,17 +4,23 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomButton from "../../components/CustomButton"
 import FormField from '@/components/FormField';
+
 import "../../global.css"
 
 const CreatePlant = () => {
   const [form, setForm] = useState({
-    plant: "",
-    preriod: ""
+    plantName: "",
+    wateringPeriod: "",
+    wateringDate: new Date().getDate(),
+    fertilizingPeriod: "",
+    fertilizingDate: new Date().getDate(),
+    repotPeriod: "",
+    repotDate: new Date().getDate()
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const submit = () => {
+  const submit = async () => {
 
   }
 
@@ -31,7 +37,7 @@ const CreatePlant = () => {
               title="Name of the plant"
               value={form.plant}
 
-              handleChangeText={(p:string) => setForm({...form, plant: p})}
+              handleChangeText={(p:string) => setForm({...form, plantName: p})}
               otherStyles="mt-7"
             />
 
@@ -39,15 +45,15 @@ const CreatePlant = () => {
               title="Watering Period"
               value={form.preriod}
               keyboardType="numeric"
-              handleChangeText={(p:string) => setForm({...form, preriod: p})}
+              handleChangeText={(p:string) => setForm({...form, wateringPeriod: p})}
               otherStyles="mt-7"
             /> 
 
             <FormField 
-              title="Furtilizing Period"
+              title="Fertilizing Period"
               value={form.preriod}
               keyboardType="numeric"
-              handleChangeText={(p:string) => setForm({...form, preriod: p})}
+              handleChangeText={(p:string) => setForm({...form, fertilizingPeriod: p})}
               otherStyles="mt-7"
             /> 
 
@@ -55,7 +61,7 @@ const CreatePlant = () => {
               title="Re-potting Period"
               value={form.preriod}
               keyboardType="numeric"
-              handleChangeText={(p:string) => setForm({...form, preriod: p})}
+              handleChangeText={(p:string) => setForm({...form, reportPeriod: p})}
               otherStyles="mt-7"
             /> 
 
