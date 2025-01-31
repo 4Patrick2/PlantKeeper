@@ -2,6 +2,7 @@ import { TouchableOpacity, Text } from 'react-native'
 import React from 'react'
 
 
+
 const CustomButton = ({ title, handlePress, containerStyles, textStyles, isLoading}: {title: string, handlePress: any, containerStyles: string, textStyles: string, isLoading: boolean}) => {
 // const CustomButton = ({ title, handlePress, containerStyles, textStyles, isLoading}) => {
   return (

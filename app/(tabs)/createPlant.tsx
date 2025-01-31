@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomButton from "../../components/CustomButton"
 import FormField from '@/components/FormField';
 import savePlant from "../../logic/dataHandling";
-import WheelPicker from '@quidone/react-native-wheel-picker';
+import DropDown from '@/components/DropDown';
 
 
 import "../../global.css"
@@ -51,22 +51,12 @@ const CreatePlant = () => {
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle= {{height: "100%"}}>
-      <WheelPicker className="bg-white , text-green"
-            data={data}
-            value={value}
-            onValueChanging={({item: {value}}) => setValue(value)}
-          />
          <View className='w-full justify-center items-center h-full px-4'>
           <View className="relative mt-5">
             <Text className='text-3xl text-white font-bold text-center'>
               Create a <Text className='text-green'>Plant</Text>
             </Text>
           </View>
-          {/* <WheelPicker 
-            data={data}
-            value={value}
-            onValueChanging={({item: {value}}) => setValue(value)}
-          /> */}
 
           <FormField 
               title="Name of the plant"
