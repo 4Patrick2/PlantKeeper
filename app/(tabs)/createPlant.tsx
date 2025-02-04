@@ -58,6 +58,8 @@ const CreatePlant = () => {
             </Text>
           </View>
 
+          <DropDown/>
+
           <FormField 
               title="Name of the plant"
               value={form.plant}

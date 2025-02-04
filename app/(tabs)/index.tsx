@@ -9,7 +9,7 @@ import DropDown from '@/components/DropDown';
 const Index = () => {
     return (
         <SafeAreaView className='h-full'>
-          <ScrollView contentContainerStyle= {{height: "100%"}}>
+          {/* <ScrollView contentContainerStyle= {{height: "100%"}}> */}
             <View className='w-full justify-center items-center px-4'>
               <View className='relative mt-5'>
               <Text className='text-3xl font-extrabold text-center'>
@@ -29,7 +29,7 @@ const Index = () => {
               
               <DropDown/>
             </View>
-          </ScrollView>
+          {/* </ScrollView> */}
         </SafeAreaView>
     )
 }
