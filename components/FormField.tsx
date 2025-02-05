@@ -2,7 +2,7 @@ import { View, Text, TextInput } from 'react-native'
 import React from 'react'
 import "../global.css"
 
-const FormField = ({title, value, placeholder, handleChangeText, otherStyles, ...probs}: {title: string, value: string, otherStyles: string}) => {
+const FormField = ({title, value, placeholder, handleChangeText, otherStyles, ...probs}: {title: string, placeholder: string, handleChangeText: any, value: string, otherStyles: string}) => {
   return (
     <View className={`space-y-2 ${otherStyles} w-full px-20`}>
       <Text className='text-base text-gray-100 font-medium'>{title}</Text>

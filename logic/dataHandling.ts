@@ -1,7 +1,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const savePlant = async (plantName: string, wateringPeriod: string, fertilizingPeriod: string, repotPeriod: string) => {   
+const savePlant = async (plantName: string, wateringPeriod: number, fertilizingPeriod: number, repotPeriod: number) => {   
     let date: Date = new Date();
     let year: number = date.getFullYear();
     let month: number = date.getMonth();
@@ -28,3 +28,13 @@ const savePlant = async (plantName: string, wateringPeriod: string, fertilizingP
 }
 
 export default savePlant
+
+const readPlants = async () => {
+    try {
+        const keys = await AsyncStorage.getAllKeys();
+
+    } catch (e) {
+        console.log(e)
+        throw
+    }
+}
