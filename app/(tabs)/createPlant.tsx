@@ -52,11 +52,6 @@ const CreatePlant = () => {
   }))
   const [value, setValue] = useState(0);
 
-  const test = (water: number) => {
-    setForm({...form, wateringPeriod: water});
-    console.log(form)
-  }
-
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle= {{height: "100%"}}>

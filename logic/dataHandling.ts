@@ -22,19 +22,24 @@ const savePlant = async (plantName: string, wateringPeriod: number, fertilizingP
         const key = JSON.stringify(plant.plantName);
         await AsyncStorage.setItem(plantName, object);
     } catch (e) {
-        console.log(e);
+        console.log("There is some errors boy");
         throw new Error("error");
     }
 }
 
 export default savePlant
 
-const readPlants = async () => {
+export const readPlants = async () => {
     try {
         const keys = await AsyncStorage.getAllKeys();
-
+        if (keys !== null) {
+            const plants = await AsyncStorage.multiGet(keys);
+            return plants.map(req => JSON.parse(req))
+        } 
+        return []
     } catch (e) {
-        console.log(e)
-        throw
+        console.log("There is some errors boy");
+        throw new Error("e")
     }
 }
+
