@@ -34,12 +34,26 @@ export const readPlants = async () => {
         const keys = await AsyncStorage.getAllKeys();
         if (keys !== null) {
             const plants = await AsyncStorage.multiGet(keys);
-            return plants.map(req => JSON.parse(req))
+            const res = plants.map(req => JSON.parse(req[1]))
+            return res
         } 
         return []
     } catch (e) {
-        console.log("There is some errors boy");
+        console.log(e);
         throw new Error("e")
     }
 }
 
+export const test = async () => {
+    try {
+        const keys = await AsyncStorage.getAllKeys();
+        if (keys !== null) {
+            const plants = await AsyncStorage.multiGet(keys);
+            return plants
+        } 
+        return []
+    } catch (e) {
+        console.log(e);
+        throw new Error("e")
+    }
+}

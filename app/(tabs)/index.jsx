@@ -5,29 +5,25 @@ import "../../global.css"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CustomButton from "@/components/CustomButton"
 import DropDown from '@/components/DropDown';
-import { readPlants } from '@/logic/dataHandling';
+import { readPlants, test } from '@/logic/dataHandling';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
 
-const getPlants = async () => {
-  const plants = await readPlants();
-  return plants
-}
 
-const logSuff = async () => {
-  // const p = getPlants()
-  // const keys = await AsyncStorage.getAllKeys();
-  // const ps = await AsyncStorage.getItem(keys[2])
-  // const o = JSON.parse(ps)
 
-  // const p = await readPlants();
-  const keys = await AsyncStorage.getAllKeys();
-  const plants = await AsyncStorage.multiGet(keys);
-  const res = plants.map((req) => JSON.parse(req))
-  console.log("res[0].wateringPeriod")
-  // console.log(p[0].wateringPeriod)
-}
+
+
+
 
 const Index = () => {
+  const [arr, setItems] = useState([]);
+  
+  const loadData = async () => {
+    const plants = await readPlants()
+    setItems(plants)
+  }
+
+
     return (
         <SafeAreaView className='h-full'>
           {/* <ScrollView contentContainerStyle= {{height: "100%"}}> */}
@@ -48,9 +44,20 @@ const Index = () => {
                     />
                     <StatusBar backgroundColor="#161622" style="light"/> */}
 
+              <FlatList
+                data={arr}
+                renderItem={({item}) => (
+                  <View>
+                    <Text>{item.plantName}</Text>
+                    <Text>{item.wateringPeriod}</Text>
+                    <Text>{item.fertilizingPeriod}</Text>
+                  </View>
+                )}
+              />
+
               <CustomButton
                 title="Print data"
-                handlePress={logSuff}
+                handlePress={loadData}
                 containerStyles='w-full mt-7'
                 textStyles=''
                 isLoading={false}
