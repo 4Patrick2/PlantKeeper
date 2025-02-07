@@ -18,6 +18,7 @@ const savePlant = async (plantName: string, wateringPeriod: number, fertilizingP
     }
 
     try {
+        console.log(plant.wateringDate)
         const object = JSON.stringify(plant);
         const key = JSON.stringify(plant.plantName);
         await AsyncStorage.setItem(plantName, object);
