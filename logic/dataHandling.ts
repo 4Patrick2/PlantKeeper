@@ -7,18 +7,31 @@ const savePlant = async (plantName: string, wateringPeriod: number, fertilizingP
     let month: number = date.getMonth();
     const monthNames =  ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+    let waterDate = new Date();
+    waterDate.setDate(date.getDate() + Number(wateringPeriod));
+
+    let fertDate = new Date();
+    fertDate.setMonth(date.getMonth() + Number(fertilizingPeriod));
+
+    let potDate = new Date();
+    potDate.setDate(15);
+    potDate.setMonth(2);
+    potDate.setFullYear(year+Number(repotPeriod))
+
+    // new Date("March 15, " + (year + Number(repotPeriod)) + " 12:00:00" );
+
     let plant = {
         plantName: plantName,
         wateringPeriod: wateringPeriod,
-        wateringDate: new Date().setDate(date.getDate() + Number(wateringPeriod)),
+        wateringDate: waterDate,
         fertilizingPeriod: fertilizingPeriod,
-        fertilizingDate: new Date().setMonth(date.getMonth() + Number(fertilizingPeriod)),
+        fertilizingDate: fertDate,
         repotPeriod: repotPeriod,
-        repotDate: new Date("March 15, " + (year + Number(repotPeriod)) + "12:00:00" )
+        repotDate: potDate
     }
 
     try {
-        console.log(plant.wateringDate)
+        console.log(plant.repotDate)
         const object = JSON.stringify(plant);
         const key = JSON.stringify(plant.plantName);
         await AsyncStorage.setItem(plantName, object);
@@ -58,3 +71,28 @@ export const test = async () => {
         throw new Error("e")
     }
 }
+
+export const removeAll = async () => {
+    try {
+        const keys = await AsyncStorage.getAllKeys();
+        await AsyncStorage.multiRemove(keys)
+        return true
+    } catch (e) {
+        console.log(e);
+        return false
+    }
+  }
+
+export const daysBetween = (endDate: Date) => {
+    let startDate = new Date();
+    let difference = new Date(endDate).getTime() - startDate.getTime();
+    let res = Math.round(difference / (1000 * 3600 * 24))
+    return res;
+  }
+
+export const monthsBetween = (endDate: Date) => {
+    let startDate = new Date();
+    let yearDifference = new Date(endDate).getFullYear() - startDate.getFullYear();
+    let months = new Date(endDate).getMonth() - startDate.getMonth() + (yearDifference * 12)
+    return months;
+  }

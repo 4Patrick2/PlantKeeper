@@ -5,7 +5,7 @@ import "../../global.css"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CustomButton from "@/components/CustomButton"
 import DropDown from '@/components/DropDown';
-import { readPlants, test } from '@/logic/dataHandling';
+import { readPlants, test, removeAll, daysBetween, monthsBetween } from '@/logic/dataHandling';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 
@@ -14,8 +14,17 @@ import { useState } from 'react';
 
 
 
-
 const Index = () => {
+  [res, setRes] = useState(false)
+  const remove = async () => {
+    const r = await removeAll();
+    setRes(r)
+  }
+
+    const reset = () => {
+      return false
+    }
+
   const [arr, setItems] = useState([]);
   
   const loadData = async () => {
@@ -26,57 +35,46 @@ const Index = () => {
 
     return (
         <SafeAreaView className='h-full bg-primary'>
-            {/* <View className='w-full justify-center items-center px-4 '>
-              <View className='relative mt-2'>
-              <Text className='text-3xl font-extrabold text-center text-green'>
-                Feast beyond you plants!
-                </Text>
-              </View>
-                    {/* <StatusBar backgroundColor="#161622" style="light"/> */}
-              {/* <FlatList
-                data={arr}
-                renderItem={({item}) => (
-                  <View className='w-full min-w-64 justify-between border-indigo-500 border-solid grid grid-flow-col grid-rows-3 gap-4 bg-green rounded-xl'>
-                    <Text className='text-white row-span-3 text-xl w-16'>{item.plantName}</Text>
-                    <Text className='text-white row-span-3 w-16'>{item.wateringPeriod}</Text>
-                    <Text className='text-white row-span-3 w-16'>{item.fertilizingPeriod}</Text>
-                  </View>
-                )}
-              /> */}
-
-              {/* <CustomButton
-                title="Print data"
-                handlePress={loadData}
-                containerStyles='w-full mt-7'
-                textStyles=''
-                isLoading={false}
-              />
-            </View> */}
-
             <FlatList
                 data={arr}
-                renderItem={({item}) => (
-                  //flex-row
-                  // <View className='m-2 border-green p-2 border-solid border-2 grid grid-flow-col grid-rows-2 gap-4  rounded-xl'> 
-                  //   <Text className='text-white row-span-3 text-xl '>{item.plantName}</Text>
-                  //   <Text className='text-white col-span-2 '>{item.wateringPeriod}</Text>
-                  //   <Text className='text-white col-span-2 row-span-2'>{item.fertilizingPeriod}</Text>
-                  // </View>
-      
-
-                    // <View className='grid grid-cols-2 grid-rows-3 gap-4'>
-                    //   <Text className=''>{item.plantName}</Text>
-                    //   <Text className=''>{item.wateringDate}</Text>
-                    //   <Text className='col-start-2'>{item.fertilizingDate}</Text>
-                    //   <Text className='col-start-2 row-start-3'>{item.repotDate}</Text>
-                    // </View> 
-                    
-                    <View className='flex-row justify-between m-2 border-2 rounded-xl border-green p-2'>
-                      <Text className='text-green text-xl font-semibold'>{item.plantName}</Text>
-                      <View className=''>
-                        <Text className='text-white text-lg font-light'>{item.wateringDate}</Text>
-                        <Text className='text-white text-lg font-light'>{item.fertilizingDate}</Text>
-                        <Text className='text-white text-lg font-light'>{item.repotDate}</Text>
+                renderItem={({item}) => (        
+                    // <View className='flex-row justify-between m-2 border-2 rounded-xl border-green p-2'>
+                    //   <Text className='text-green text-xl font-semibold'>{item.plantName}</Text>
+                    //   <View className=''>
+                    //     <Text className='text-white text-lg font-light'>
+                    //     {daysBetween(item.wateringDate)} days to watering!
+                    //     </Text>
+                    //     <Text className='text-white text-lg font-light'>
+                    //     {daysBetween(item.fertilizingDate)} days to fertilizing!</Text>
+                    //     <Text className='text-white text-lg font-light'>
+                    //     {monthsBetween(item.repotDate)} months to repotting!</Text>
+                    //   </View>
+                    // </View>
+                    <View className='my-4 border-2 rounded-xl border-green p-2'>
+                      <View className='flex-row justify-between m-2'>
+                        <Text className='text-green text-xl font-semibold'>{item.plantName}</Text>
+                        <CustomButton 
+                          title="Delete"
+                          handlePress={removeAll}
+                          containerStyles='w-16'
+                        />
+                      </View>
+                      <View className='flex-row justify-between m-2'>
+                        <CustomButton 
+                          title={daysBetween(item.wateringDate)}
+                          handlePress={reset}
+                          containerStyles='w-24'
+                        />
+                        <CustomButton 
+                          title={daysBetween(item.fertilizingDate)}
+                          handlePress={reset}
+                          containerStyles='w-24'
+                        />
+                        <CustomButton 
+                          title={daysBetween(item.repotDate)}
+                          handlePress={reset}
+                          containerStyles='w-24'
+                        />
                       </View>
                     </View>
                 )}
@@ -87,6 +85,12 @@ const Index = () => {
                       <Text className='text-3xl font-extrabold text-center text-green'>
                       Feast beyond you plants!
                       </Text>
+                      {/* <CustomButton 
+                        title="Remove all plants :("
+                        handlePress={remove()}
+                        containerStyles='w-80 mt-4'
+                        isLoading={false}
+                      /> */}
                     </View>
                   </View>
                 )}
