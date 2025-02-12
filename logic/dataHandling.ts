@@ -8,17 +8,16 @@ const savePlant = async (plantName: string, wateringPeriod: number, fertilizingP
     const monthNames =  ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     let waterDate = new Date();
-    waterDate.setDate(date.getDate() + Number(wateringPeriod));
+    waterDate.setDate(date.getDate() + wateringPeriod);
 
     let fertDate = new Date();
-    fertDate.setMonth(date.getMonth() + Number(fertilizingPeriod));
+    fertDate.setDate(date.getDate() + (fertilizingPeriod * 7));
 
     let potDate = new Date();
     potDate.setDate(15);
     potDate.setMonth(2);
     potDate.setFullYear(year+Number(repotPeriod))
 
-    // new Date("March 15, " + (year + Number(repotPeriod)) + " 12:00:00" );
 
     let plant = {
         plantName: plantName,
@@ -31,7 +30,6 @@ const savePlant = async (plantName: string, wateringPeriod: number, fertilizingP
     }
 
     try {
-        console.log(plant.repotDate)
         const object = JSON.stringify(plant);
         const key = JSON.stringify(plant.plantName);
         await AsyncStorage.setItem(plantName, object);
@@ -83,6 +81,16 @@ export const removeAll = async () => {
     }
   }
 
+export const remove = async (key: string) => {
+    try {
+        await AsyncStorage.removeItem(key)
+        return true
+    } catch (e) {
+        console.log(e);
+        return false
+    }
+  }
+
 export const daysBetween = (endDate: Date) => {
     let startDate = new Date();
     let difference = new Date(endDate).getTime() - startDate.getTime();
@@ -96,3 +104,54 @@ export const monthsBetween = (endDate: Date) => {
     let months = new Date(endDate).getMonth() - startDate.getMonth() + (yearDifference * 12)
     return months;
   }
+
+export const updateItem = async (item: any, index: number) => {
+    try {
+        let date = new Date()
+        switch (index){
+            case 1: // Watering
+                item.wateringDate = date.setDate(date.getDate() + item.wateringPeriod); 
+            case 2: // Fertilizing
+                let newDate = date.setDate(date.getDate() + (item.fertilizingPeriod * 7))
+                item.fertilizingDate = new Date(newDate);
+            case 3: // Repotting
+                let potDate = new Date();
+                potDate.setDate(15);
+                potDate.setMonth(2);
+                potDate.setFullYear(date.getFullYear() + item.repotPeriod)
+                item.repotDate = potDate;
+        } 
+        const jsonString = JSON.stringify(item);
+        await AsyncStorage.setItem(item.plantName, jsonString)
+    } catch (e) {
+        console.log(e)
+        throw new Error("Error")
+    }
+}
+
+export const findTime = (date: Date) => {
+  let current = new Date();
+  let init = new Date(date);
+  let diff = init.getTime() - current.getTime();
+  let days = Math.round(diff / (1000 * 3600 * 24));
+
+
+  if (days < 30 && days > -30) {
+      return days + " days"
+  } else {
+      let initMonth = init.getMonth(); 
+      let initYear  = init.getFullYear(); 
+      let currentMonth  = current.getMonth(); 
+      let currentYear   = current.getFullYear(); 
+
+      let yearDiff = initYear - currentYear;
+
+      if (yearDiff === 0) {
+          let months = initMonth - currentMonth
+          return months + " months"
+      } else {
+          let months = (12-initMonth+currentMonth) + (yearDiff-1) * 12
+          return months + " months"
+      }
+  }
+}

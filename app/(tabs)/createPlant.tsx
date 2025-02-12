@@ -9,7 +9,7 @@ import DropDown from '@/components/DropDown';
 
 
 import "../../global.css"
-import { router } from 'expo-router';
+import { router, Link } from 'expo-router';
 
 const CreatePlant = () => {
   const [form, setForm] = useState({
@@ -120,7 +120,7 @@ const CreatePlant = () => {
             <CustomButton 
               title="Create Plant"
               handlePress={submit}
-              containerStyles="w-full mt-7"
+              containerStyles="w-full mt-7 min-h-[62px]"
               isLoading= {isSubmitting}
             />
          </View>
@@ -133,3 +133,7 @@ const CreatePlant = () => {
 }
 
 export default CreatePlant
+function resolvePath() {
+  throw new Error('Function not implemented.');
+}
+

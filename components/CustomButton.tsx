@@ -10,7 +10,8 @@ const CustomButton = ({ title, handlePress, containerStyles, textStyles, isLoadi
         onPress={handlePress}
         activeOpacity={0.7} 
         disabled={isLoading}
-        className={`bg-green rounded-xl min-h-[62px] justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}>
+        // className={`bg-green rounded-xl min-h-[62px] justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}>
+        className={`bg-green rounded-xl justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}>
       <Text 
       // className='text-primary font-semibold text-lg'
       className={`${textStyles} text-primary font-semibold text-lg`}

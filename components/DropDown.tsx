@@ -54,9 +54,6 @@ const DropDown = ({title, onChange, range, unit}: {title: string, onChange: ((it
 					{/* <View className={`max-h-64 pt-1 top-[${Math.floor(top)}px]`}> */}
 					<View className={` bg-white rounded-xl max-h-64 pt-1 top-[${Math.floor(top)}px] w-full`}>
 					<FlatList
-						// keyExtractor={(item) => item.value}
-						// data={[{value: "1", label: "1"}, {value:"2", label: "2"}]}
-						// data={[Math.floor(top), 1,2,3,4,5,6,7,8,9,10,11,12,13,14]}
 						data={generateData(range, unit)}
 						renderItem={({item}) => (
 
@@ -68,7 +65,7 @@ const DropDown = ({title, onChange, range, unit}: {title: string, onChange: ((it
 							</TouchableOpacity>
 						)} 
 						
-						ItemSeparatorComponent={()=><View className='h-4 bg-white -my-2'/>}
+						// ItemSeparatorComponent={()=><View className='h-4 bg-white -my-2'/>}
 						/>
 				</View>
 				</View>

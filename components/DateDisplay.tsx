@@ -1,25 +1,19 @@
 import { TouchableOpacity, Text, View } from "react-native";
 import React from "react";
 
-const updateItem = () => {
-    // return false
-}
-
-const findTime = (date: Date) {
-    // return "X days" or "X months"
-    return "15 days"
-}
-
-const DateDisplay = ({item, context, date} : {item: any; context: string, date: Date}) => {
+// const DateDisplay = ({subtitle, date, handlePress, containerStyles} : {subtitle: string, date: Date, handlePress: any, containerStyles: string}) => {
+const DateDisplay = ({subtitle, date, handlePress, containerStyles} : {subtitle: string, date: string, handlePress: any, containerStyles: string}) => {
+//   let diff = findTime(date);
+  let num = Number(date.split(" ")[0])
   return (
-    <TouchableOpacity
-        onPress={updateItem}
+      <TouchableOpacity
+        onPress={handlePress}
         activeOpacity={0.7}
-        className={""}>
-    <View>
-        <Text>{findTime(date)}</Text>
-        <Text>{context}</Text>
-    </View>
+        className={` rounded-xl justify-center items-center ${containerStyles} ${(num > 0) ? "bg-green" : "bg-red"}`}>
+        <View className="justify-center items-center">
+            <Text className="font-bold font-3xl underline">{date}</Text>
+            <Text className="font-normal font-lg">{subtitle}</Text>
+        </View>
     </TouchableOpacity>
   )
 }

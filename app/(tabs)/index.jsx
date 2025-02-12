@@ -5,27 +5,25 @@ import "../../global.css"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CustomButton from "@/components/CustomButton"
 import DropDown from '@/components/DropDown';
-import { readPlants, test, removeAll, daysBetween, monthsBetween } from '@/logic/dataHandling';
+import { readPlants, test, remove, daysBetween, updateItem, findTime } from '@/logic/dataHandling';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
-
-
-
-
+import DateDisplay from '@/components/DateDisplay';
 
 
 const Index = () => {
-  [res, setRes] = useState(false)
-  const remove = async () => {
-    const r = await removeAll();
-    setRes(r)
-  }
 
-    const reset = () => {
-      return false
+  const deleteItem = (key) => {
+    setIsLoading(true)
+    try {
+      remove(key)
+    } finally {
+      setIsLoading(false)
     }
+  } 
 
   const [arr, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   
   const loadData = async () => {
     const plants = await readPlants()
@@ -33,47 +31,43 @@ const Index = () => {
   }
     loadData()
 
+
     return (
         <SafeAreaView className='h-full bg-primary'>
             <FlatList
                 data={arr}
                 renderItem={({item}) => (        
-                    // <View className='flex-row justify-between m-2 border-2 rounded-xl border-green p-2'>
-                    //   <Text className='text-green text-xl font-semibold'>{item.plantName}</Text>
-                    //   <View className=''>
-                    //     <Text className='text-white text-lg font-light'>
-                    //     {daysBetween(item.wateringDate)} days to watering!
-                    //     </Text>
-                    //     <Text className='text-white text-lg font-light'>
-                    //     {daysBetween(item.fertilizingDate)} days to fertilizing!</Text>
-                    //     <Text className='text-white text-lg font-light'>
-                    //     {monthsBetween(item.repotDate)} months to repotting!</Text>
-                    //   </View>
-                    // </View>
-                    <View className='my-4 border-2 rounded-xl border-green p-2'>
+                    <View className='my-4 p-2'>
                       <View className='flex-row justify-between m-2'>
-                        <Text className='text-green text-xl font-semibold'>{item.plantName}</Text>
+                        <Text className='text-green text-3xl font-semibold'>{item.plantName}</Text>
+
                         <CustomButton 
                           title="Delete"
-                          handlePress={removeAll}
-                          containerStyles='w-16'
+                          handlePress={() => deleteItem(item.plantName)}
+                          containerStyles='w-16 h-10'
+                          isLoading= {isLoading}
                         />
                       </View>
                       <View className='flex-row justify-between m-2'>
-                        <CustomButton 
-                          title={daysBetween(item.wateringDate)}
-                          handlePress={reset}
-                          containerStyles='w-24'
+                        <DateDisplay 
+                          subtitle='to wattering!'
+                          date={findTime(item.wateringDate)}
+                          // handlePress={updateItem(item, 1)}
+                          handlePress={() => updateItem(item, 1)}
+                          containerStyles='min-h-[62px] w-32'
                         />
-                        <CustomButton 
-                          title={daysBetween(item.fertilizingDate)}
-                          handlePress={reset}
-                          containerStyles='w-24'
+                        <DateDisplay 
+                          subtitle='to fertilizing!'
+                          date={findTime(item.fertilizingDate)}
+                          handlePress={() => updateItem(item, 2)}
+                          containerStyles='min-h-[62px] w-32'
                         />
-                        <CustomButton 
-                          title={daysBetween(item.repotDate)}
-                          handlePress={reset}
-                          containerStyles='w-24'
+                        <DateDisplay 
+                          subtitle='to repotting!'
+                          date={findTime(item.repotDate)}
+                          // handlePress={updateItem(item, 3)}
+                          handlePress={() => updateItem(item, 3)}
+                          containerStyles='min-h-[62px] w-32'
                         />
                       </View>
                     </View>
@@ -81,17 +75,17 @@ const Index = () => {
 
                 ListHeaderComponent={() => (
                   <View className='my-6 px-4 space-y-6'>
-                    <View className='justify-between items-start'>
+                    <View className='justify-center items-center '>
                       <Text className='text-3xl font-extrabold text-center text-green'>
                       Feast beyond you plants!
                       </Text>
-                      {/* <CustomButton 
-                        title="Remove all plants :("
-                        handlePress={remove()}
-                        containerStyles='w-80 mt-4'
-                        isLoading={false}
-                      /> */}
                     </View>
+                  </View>
+                )}
+
+                ItemSeparatorComponent={() => (
+                  <View className=' justify-center items-center'>
+                    <View className='min-w-80 max-w-80 bg-green rounded-xl min-h-1'></View>
                   </View>
                 )}
               />
