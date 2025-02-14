@@ -155,3 +155,41 @@ export const findTime = (date: Date) => {
       }
   }
 }
+
+const getWateringDates = async () => {
+    try {
+        const keys = await AsyncStorage.getAllKeys();
+        if (keys !== null) {
+            const plants = await AsyncStorage.multiGet(keys);
+            const res = plants.map(req => JSON.parse(req[1]))
+            return res            
+            // const dates = [];
+            // res.forEach((p) =>
+            //     dates.push(p.wateringDate)
+            // )
+            // return dates;
+        } 
+        return []
+    } catch (e) {
+        console.log(e);
+        throw new Error("e")
+    }
+}
+
+export const getDateString = (date: Date) => {
+    const d = new Date();
+    const nd = new Date(date)
+    let year = nd.getFullYear();
+    let month = nd.getMonth();
+    let day = nd.getDate();
+    
+    d.setDate(day)
+    d.setMonth(month)
+    d.setFullYear(year)
+    
+
+    const s = d.toISOString()
+    const r = s.slice(0,10)
+
+    return r
+}
