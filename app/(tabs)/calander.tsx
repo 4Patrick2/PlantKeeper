@@ -24,11 +24,31 @@ const Calander = () => {
     p.forEach((curent:any) =>
         d.push(curent.wateringDate)
     )
-    // setDates(d);
     return d
   }
-  const d = extractDates(plants)
-  let s = getDateString(d[0])
+
+  const extractDatesFert = (p:any) => {
+    const d:any = [];
+    p.forEach((curent:any) =>
+        d.push(curent.fertDate)
+    )
+    return d
+  }
+
+  const extractDatesPot = (p:any) => {
+    const d:any = [];
+    p.forEach((curent:any) =>
+        d.push(curent.fertDate)
+    )
+    return d
+  }
+
+  const dw = extractDates(plants)
+  let s = getDateString(dw[0])
+  const df = extractDatesFert(plants)
+  let f = getDateString(df[0])
+  const dp = extractDatesPot(plants)
+  let p = getDateString(dp[0])
   return (
     <SafeAreaView className='h-full bg-primary'>
       <View className='pt-16 mx-8'> {/* items-center justify-center pt-16 mx-8 */}
@@ -56,7 +76,9 @@ const Calander = () => {
           markedDates={{
             [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'green'},
             "2025-02-05": {selected: true, marked: true, selectedColor: 'green'},
-            [s]: {selected: true, marked: true, selectedColor: 'green'}
+            [s]: {selected: true, marked: true, selectedColor: 'green'},    
+            [f]: {selected: true, marked: true, selectedColor: 'blue'},    
+            [p]: {selected: true, marked: true, selectedColor: 'red'}    
           }}
           />
       </View>
